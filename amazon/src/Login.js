@@ -19,19 +19,54 @@ function Login({setUser}) {
             alert(error.message)
         })
     }
+
+     
     return (
         <Container>
+        <AmazonLogo src='http://media.corporate-ir.net/media_files/IROL/17/176060/Oct18/Amazon%20logo.PNG' />
+
         <Content>
-            <AmazonLogo src='http://media.corporate-ir.net/media_files/IROL/17/176060/Oct18/Amazon%20logo.PNG' />
-            <h1>Sign into Amazon</h1>
+             <h1>Sign-In</h1>
+            
+            <form type = 'submit'
+            
+            
+            >
+
+                <input
+                name = 'name'
+                type = 'text'
+                placeholder = 'username'
+                
+                
+                
+                
+                />
+                 <input
+                name = 'password'
+                type = 'password'
+                placeholder = 'password'
+                
+                
+                
+                
+                />
+
+
+
+
+            </form>
+
+
             <LoginButton
                 onClick={signIn}
             >
-                Sign in with Google
+                Sign -in
             </LoginButton>
         </Content>
     </Container>
     )
+     
 }
 
 export default Login
@@ -40,19 +75,23 @@ const Container = styled.div`
     width: 100%;
     height: 100vh;
     background-color: #f8f8f8;
-    display: grid;
-    place-items: center;
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+ 
 `
 const Content = styled.div`
-    padding: 100px;
+    padding: 50px;
     background-color: white;
     border-radius: 5px;
     box-shadow: 0 1px 3px gray;
     text-align: center;
+    width:75%;
 `
 const AmazonLogo = styled.img`
     height: 100px;
     margin-bottom: 40px;
+    object-fit:contain;
 `
 const LoginButton = styled.button`
     margin-top: 50px;

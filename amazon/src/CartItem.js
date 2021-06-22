@@ -44,7 +44,7 @@ function CartItem({id, item}) {
                 value = {item.quantity}
                 onChange= {(e)=> changeQuantity(e.target.value)}
                 >
-                  {/* <option  >Qty:  </option>   */}
+                 
                   {options}
 
                 </select>

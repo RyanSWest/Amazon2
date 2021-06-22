@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Product  from './Product';
 import firebaseApp from './firebase';
 import{db} from './firebase';
+import Login from './Login';
 
 function Home() {
     
@@ -44,6 +45,7 @@ function Home() {
                
 
              </Banner>
+           
              <Content>
                  {products.map((data)=> {
 

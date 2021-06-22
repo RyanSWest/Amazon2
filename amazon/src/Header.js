@@ -5,7 +5,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import {Link} from 'react-router-dom';
 
-const Header = () => {
+const Header = ({cartItems, user, signout}) => {
   return (
     <Container>
       <HeaderLogo>
@@ -37,7 +37,9 @@ const Header = () => {
       <HeaderNavItems>
         <HeaderOption>
           <OptionLineOne>Hello, Guy</OptionLineOne>
+          <Link to = '/login'> 
           <OptionLineTwo>Account & Lists</OptionLineTwo>
+          </Link>
         </HeaderOption>
 
         <HeaderOption>
@@ -51,7 +53,7 @@ const Header = () => {
         <Link to ="/cart"> 
           <ShoppingBasketIcon />
 
-          <CartCount>5</CartCount>
+          <CartCount>{cartItems.length}</CartCount>
           </Link>
         </HeaderOptionCart>
          
