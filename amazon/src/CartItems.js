@@ -3,13 +3,25 @@ import styled from 'styled-components';
 // import { Container } from 'winston';
 import CartItem from './CartItem';
 
-function CartItems() {
+function CartItems({cartItems}) {
     return (
        <Container>
            <Title>Shopping Cart</Title>
+           <hr/>
 
            <ItemsContainer>
-                <CartItem/>
+
+               {cartItems.map(item=> {
+                   return (
+                    <CartItem
+                    id = {item.id}
+                    item = {item.product}
+                    
+                    />
+
+                   )
+               })}
+                 
 
            </ItemsContainer>
 
@@ -23,11 +35,18 @@ function CartItems() {
 export default CartItems
 
 const Container = styled.div`
-height: 300px;
+ 
 flex: 0.8;
 padding: 20px;
 margin-right: 18px;
 background: white;`
 
-const Title = styled.div``
-const ItemsContainer = styled.div` `
+const Title = styled.h1`
+margin-bottom: 8px;
+
+
+`
+const ItemsContainer = styled.div` 
+
+
+`

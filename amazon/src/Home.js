@@ -55,6 +55,7 @@ function Home() {
                     price = {data.product.price}
                     image = {data.product.image}
                     rating = {data.product.rating}
+                    id = {data.id}
 
                     />)
                      

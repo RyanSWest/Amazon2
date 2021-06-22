@@ -4,11 +4,11 @@ import styled  from 'styled-components';
 import CartTotal  from './CartTotal';
 import CartItems from './CartItems';
 
-function Cart() {
+function Cart({cartItems}) {
     return (
        <Container>
          
-         <CartItems/>
+         <CartItems cartItems= {cartItems}/>
          <CartTotal/>
 
        </Container>
