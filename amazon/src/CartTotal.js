@@ -1,12 +1,39 @@
 import React from 'react'
 import styled from 'styled-components'
 
-function CartTotal({cartItems, getTotalPrice, getCount}) {
+function CartTotal({cartItems}) {
+
+    const getTotalPrice = ()=> {
+        let total = 0;
+        cartItems.forEach(item => {
+            console.log("ITEM PRICE", item.product.price, "QQ", item.product.quantity)
+            total +=(item.product.price * item.product.quantity)
+            
+        });
+        return total;
+    }
+
+    const getCount = ()=> {
+        let count = 0;
+        cartItems.forEach((item)=> {
+            console.log("ITEM QUANTITY", item, item.product.quantity)
+            count+= item.product.quantity;
+
+        })
+        return count
+
+    }
+
+
+
     return (
         <Container>
          <Subtotal>Subtotal ({getCount()} items):
          <NumberFormat value = {getTotalPrice()} displayType={'text'} thousandSeperator={true}prefix={'$'}/>
+         <h3>{getCount()}</h3>
+         <h2>${getTotalPrice()}</h2>
          </Subtotal>
+         <CheckoutButton>Checkout</CheckoutButton>
 
         </Container>
     )
@@ -39,4 +66,4 @@ const CheckoutButton = styled.button`
         background:  #ddb347;
     }
 `
-const NumberFormat = styled.div` `
+const NumberFormat = styled.h2` `

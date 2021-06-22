@@ -9,6 +9,7 @@ function Cart({cartItems}) {
     const getTotalPrice = ()=> {
         let total = 0;
         cartItems.forEach(item => {
+            console.log("ITEM PRICE", item.product.price, "QQ", item.product.quantity)
             total +=(item.product.price * item.product.quantity)
             
         });
