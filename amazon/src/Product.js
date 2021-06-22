@@ -5,7 +5,7 @@ import {db} from './firebase';
 function Product({name, price, rating, image, id}) {
 
   const addToCart = ()=> {
-    console.log(id);
+    console.log( "ADD ID ==>",id);
     const cartItem = db.collection('cart-items').doc(id);
     cartItem.get()
     .then((doc)=> {

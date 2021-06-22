@@ -1,16 +1,34 @@
 import React from 'react';
-import styled from 'styled-components'
-;
+import styled from 'styled-components';
+import {db} from './firebase';
+ 
 function CartItem({id, item}) {
+
+    console.log("CART _ID", id)
+
+    const deleteItem = (e)=> {
+        e.preventDefault()
+        db.collection('cart-items').doc(id).delete();
+    }
 
     let options = [];
 
     for (let i = 1; i<Math.max(item.quantity+1,20); i++){
-        options.push( <option value = {i}> Qty: {i}</option>)
+        options.push( <option value = {i}
+                        key = {i}
+        
+        > Qty: {i}</option>)
+    }
+
+    const changeQuantity = (newQuantity)=> {
+        db.collection('cart-items').doc(id).update({
+            quantity: parseInt(newQuantity)
+        })
     }
     return (
         <Container>
             Cart Item
+            {item.id}
             <ImageContainer>
                 <img src = {item.image}/>
 
@@ -24,7 +42,7 @@ function CartItem({id, item}) {
             <CartItemQuantityContainer>
                 <select
                 value = {item.quantity}
-                // onChange= {}
+                onChange= {(e)=> changeQuantity(e.target.value)}
                 >
                   {/* <option  >Qty:  </option>   */}
                   {options}
@@ -32,7 +50,16 @@ function CartItem({id, item}) {
                 </select>
                 {item.quantitiy}
                 </CartItemQuantityContainer>
-             <CartItemDeleteContainer>Delete</CartItemDeleteContainer>
+             <CartItemDeleteContainer
+              onClick = {deleteItem}
+             
+             
+             
+             >Delete
+             
+             
+             
+             </CartItemDeleteContainer>
             </CartItemInfoBottom>
             </CartItemInfo>
             
@@ -111,3 +138,5 @@ margin-left:16px;
 cursor:pointer;
 
 `
+
+ 
