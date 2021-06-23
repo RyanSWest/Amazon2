@@ -8,7 +8,8 @@ import { db, auth } from "./firebase";
 import Login from "./Login";
 import styled from "styled-components";
 import Register from "./Register";
-import SignIn from "./SignIn";
+import Checkout from './Checkout';
+// import {useStateValue} from "./StateProvider"
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -27,27 +28,7 @@ function App() {
       setCartItems(tempItems);
     });
   };
-
-  const signUp = (e) => {
-    e.preventDefault();
-    console.log("SIGNUP CLICK");
-
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((authUser) => {
-        authUser.user.updateProfile({
-          displayName: username,
-        });
-      })
-      .catch((error) => alert(error.message));
-  };
-
-  const signOut = () => {
-    auth.signOut().then(() => {
-      localStorage.removeItem("user");
-      setUser(null);
-    });
-  };
+ 
 
   useEffect(() => {
     getCartItems();
@@ -60,14 +41,24 @@ function App() {
 
       <Switch>
         <Route path="/login">
-          <Login username={username} email={email} password={password} />
+          <Login setUser= {setUser}/>
         </Route>
         <Route path="/register">
-          <Register username={username} email={email} password={password} />
+          <Register
+           signUp = {signUp}
+             />
         </Route>
 
         <Route path="/cart">
           <Cart cartItems={cartItems} />
+        </Route>
+
+        <Route path = '/checkout'>
+          <Checkout cartItems ={cartItems}>
+
+          </Checkout>
+
+
         </Route>
 
         <Route path="/">

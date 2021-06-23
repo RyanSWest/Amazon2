@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-
+ 
 function CartTotal({cartItems}) {
 
     const getTotalPrice = ()=> {
@@ -10,7 +10,11 @@ function CartTotal({cartItems}) {
             total +=(item.product.price * item.product.quantity)
             
         });
-        return total;
+        return total.toFixed(2);
+        // return cartItems.reduce((acc, val)=> {
+        //     return acc + val
+        // },0)
+        // .toFixed(2);
     }
 
     const getCount = ()=> {
@@ -29,8 +33,7 @@ function CartTotal({cartItems}) {
     return (
         <Container>
          <Subtotal>Subtotal ({getCount()} items):
-         <NumberFormat value = {getTotalPrice()} displayType={'text'} thousandSeperator={true}prefix={'$'}/>
-         <h3>{getCount()}</h3>
+          <h3>{getCount()}</h3>
          <h2>${getTotalPrice()}</h2>
          </Subtotal>
          <CheckoutButton>Checkout</CheckoutButton>

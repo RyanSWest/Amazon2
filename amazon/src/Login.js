@@ -1,25 +1,49 @@
-import React from 'react';
+import React, {useState, useHistory} from 'react';
 import styled from 'styled-components';
   
 import { auth, provider} from './firebase';
+
+function Login( ) {
+
+    // const history = useHistory();
+
+
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
  
-function Login({setUser}) {
+  const login = (e)=> {
+      e.preventDefault();
 
-    const signIn = ()=> {
-        auth.signInWithPopup(provider).then((res)=> {
-            let user = res.user;
-            let newUser = {
-                name: user.displayName,
-                email:user.email,
-                photo: user.photoURL
-            }
-            localStorage.setItem('user', JSON.stringify(newUser))
-            setUser(newUser);
-        }).catch((error)=> {
-            alert(error.message)
-        })
-    }
+      auth.signInWithEmailAndPassword(email, password)
+      .then((auth)=> {
+        //   history.push('/')
+        console.log("LOGIN!!")
 
+      })
+      .catch(e => alert(e.message));
+
+  }
+  
+  const register = (e)=> {
+    e.preventDefault();
+
+    auth.createUserWithEmailAndPassword(email, password)
+    .then(auth=> {
+        // history.push('/');
+
+        console.log("REGISTER SUCKA!!!")
+
+    })
+    .catch((err)=> {
+        alert(err.message);
+    })
+    
+}
+   
+
+     
      
     return (
         <Container>
@@ -29,14 +53,17 @@ function Login({setUser}) {
              <h1>Sign-In</h1>
             
             <form type = 'submit'
+            onSubmit={login}
             
             
             >
 
                 <input
                 name = 'name'
-                type = 'text'
-                placeholder = 'username'
+                type = 'email'
+                placeholder = 'email'
+                value = {email}
+                onChange={(e)=> setEmail(e.target.value)}
                 
                 
                 
@@ -46,6 +73,8 @@ function Login({setUser}) {
                 name = 'password'
                 type = 'password'
                 placeholder = 'password'
+                value={password}
+                onChange={(e)=> setPassword(e.target.value)}
                 
                 
                 
@@ -59,10 +88,11 @@ function Login({setUser}) {
 
 
             <LoginButton
-                onClick={signIn}
+                onClick={login}
             >
                 Sign -in
             </LoginButton>
+            <RegisterButton onClick = {register}>Register</RegisterButton>
         </Content>
     </Container>
     )
@@ -78,6 +108,7 @@ const Container = styled.div`
     display:flex;
     flex-direction: column;
     align-items:center;
+     
  
 `
 const Content = styled.div`
@@ -87,6 +118,7 @@ const Content = styled.div`
     box-shadow: 0 1px 3px gray;
     text-align: center;
     width:75%;
+     
 `
 const AmazonLogo = styled.img`
     height: 100px;
@@ -101,4 +133,16 @@ const LoginButton = styled.button`
     border-radius: 4px;
     padding: 4px 8px;
     cursor: pointer;
+`
+
+const RegisterButton = styled.button` 
+ border-radius: 2px;
+ width:100%;
+ height:30px;
+ border: 1px solid;
+ margin-top: 10px;
+ border-color:darkgray;
+
+
+
 `
