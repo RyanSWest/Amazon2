@@ -22,7 +22,7 @@ import { UserContext, PasswordContext  } from "./contexts/userContext";
       if (authUser){
         console.log("AUTH USER", authUser)
         setUser(authUser)
-        console.log("USERNAME", user.displayname)
+        // console.log("USERNAME", user.displayname)
 
       }else{
         console.log("NO AUTH USER")
@@ -34,8 +34,7 @@ import { UserContext, PasswordContext  } from "./contexts/userContext";
   const getTotalPrice = ()=> {
     let total = 0;
     cartItems.forEach(item => {
-        console.log("ITEM PRICE", item.product.price, "QQ", item.product.quantity)
-        total +=(item.product.price * item.product.quantity)
+         total +=(item.product.price * item.product.quantity)
         
     });
     return total.toFixed(2);

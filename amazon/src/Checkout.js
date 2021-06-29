@@ -7,6 +7,30 @@ function Checkout({cartItems, getTotalPrice}) {
     console.log("CHECKOUT ITEMS", cartItems)
     const tax = getTotalPrice()* .15;
     const grandTotal = parseInt (tax) + parseInt (getTotalPrice())
+
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    const d = new Date();
+    const arrive =()=>{
+        let day = parseInt (d.getDate()) +3;
+         let month = months[d.getMonth()]
+         const nextMonth = parseInt(month)+1
+
+         console.log("MONTH", month, "DAY", day)
+
+        if (day> 31){
+            month = months[nextMonth]
+            day = 1
+        }
+         else{
+             day = day;
+         }
+
+        return month, day
+    }
+    
+   arrive()
+    
     return (
         <Container>
             <AmazonLogo src = "https://images-na.ssl-images-amazon.com/images/G/01/x-locale/checkout/confirm-banner._CB485943246_.gif"/>
@@ -61,32 +85,34 @@ function Checkout({cartItems, getTotalPrice}) {
                 <span>Items( {cartItems.length})</span>
                 <div>
 
-                <span>Total before Tax: </span>  <PriceSpan>${getTotalPrice()}</PriceSpan>
+                <span>Total before Tax: </span>  <span className = 'span-right'>${getTotalPrice()}</span>
                 </div>
                 <div>
-                   <span>Estimated Tax to be collected</span>  <PriceSpan2>${tax.toFixed(2)}</PriceSpan2>
+                   <span className = "left-span">Estimated Tax to be collected</span>  <span className= 'span-right'>${tax.toFixed(2)}</span>
                 </div>
                 <div>
 
-                <h3>Order total:</h3> < Total>${grandTotal}</Total>
+                <h3 className = 'h3-left'>Order total:</h3> < h3 className = 'h3-right'>${grandTotal}</h3>
                 </div>
                  
                
-
+            
             </TopRight>
-
+            
 
             </TopDiv>
 
 
-            
+             
              {cartItems?.map (item=> {
                  return(
                     <CartItemDiv>
  
                      
-                     
+        
                     <ImageContainer>
+                    <Deliver>Delivery: {months[ d.getMonth()]} {   d.getDate()}</Deliver>
+
                         <img src = {item.product.image}/>
         
                     </ImageContainer>
@@ -126,11 +152,26 @@ padding: 15px;
 border-radius: 4px;
 
  `
+
+const Deliver = styled.h4 ` 
+    color: green;
+    margin-top: 10px;
+    margin-left: 10px;
+    
+    
+    `
+
+ 
 const CartItemDiv = styled.div `
 padding-top: 12px;
 padding-bottom:12px;
 display:flex;
 border-bottom: 1px solid #DDD;
+width: 60%;
+border: 2px solid lightgrey;
+margin-left: 30px;
+margin-top: 15px;
+
 
 
 `
@@ -232,7 +273,23 @@ span {
     font-size: 12px;}
 
     div{
-        display: flex
+        display: block;
+        .span-left{
+            float:left;
+        }
+        .span-right{
+            float: right;
+        }
+        .h3-left{
+            float: left;
+            margin-top: 15px;
+        }
+        .h3-right{
+            float: right;
+            margin-top: 15px;
+        }
+
+         
          
     }
     h3 {
@@ -279,21 +336,4 @@ const AmazonLogo = styled.img`
     object-fit:contain;
 `
 
-const Total = styled.h3 ` 
-margin-left: 150px;
-
-
-
-` 
-const PriceSpan = styled.span `
  
-padding-left: 150px;
-
-
-
-
-`
-const PriceSpan2 = styled.span ` 
-padding-left: 90px;
-
-`
