@@ -1,16 +1,20 @@
-import React, {useState, useHistory} from 'react';
+import React, {useState, useContext , useEffect} from 'react';
 import styled from 'styled-components';
-  
+import { useHistory, Link } from 'react-router-dom';  
 import { auth, provider} from './firebase';
+import {UserContext, PasswordContext} from './contexts/userContext';
 
 function Login( ) {
 
-    // const history = useHistory();
+    const history = useHistory();
+     const { email, setEmail}= useContext(UserContext)
+     const {password, setPassword}= useContext(PasswordContext)
+ 
+    useEffect(()=> {
+        setEmail('')
+        setPassword('')
 
-
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+    }, [ ])
 
  
   const login = (e)=> {
@@ -18,7 +22,10 @@ function Login( ) {
 
       auth.signInWithEmailAndPassword(email, password)
       .then((auth)=> {
-        //   history.push('/')
+          localStorage.clear()
+          history.push('/')
+          let user = localStorage.setItem('user', email)
+          
         console.log("LOGIN!!")
 
       })
@@ -31,15 +38,22 @@ function Login( ) {
 
     auth.createUserWithEmailAndPassword(email, password)
     .then(auth=> {
-        // history.push('/');
+        history.push('/');
+        let user = localStorage.setItem('user', email)
 
-        console.log("REGISTER SUCKA!!!")
+
+        console.log("REGISTER WORKS!!!")
 
     })
     .catch((err)=> {
         alert(err.message);
     })
     
+}
+
+const goToReg = (e)=> {
+    e.preventDefault();
+    history.push('/register')
 }
    
 
@@ -57,7 +71,7 @@ function Login( ) {
             
             
             >
-
+                <h5>Email</h5>
                 <input
                 name = 'name'
                 type = 'email'
@@ -69,6 +83,7 @@ function Login( ) {
                 
                 
                 />
+                <h5>Password</h5>
                  <input
                 name = 'password'
                 type = 'password'
@@ -85,14 +100,21 @@ function Login( ) {
 
 
             </form>
+            <p>By continuing, you agree to Amazon's Conditions of Use and Privacy Notice.</p>
 
-
+            <ButtonContainer> 
             <LoginButton
                 onClick={login}
             >
                 Sign -in
             </LoginButton>
-            <RegisterButton onClick = {register}>Register</RegisterButton>
+
+            <span>New to Amazon?</span>
+             </ButtonContainer>
+             <Link to = '/register'> 
+             
+            <RegisterButton >Create Your Amazon Account</RegisterButton>
+            </Link>
         </Content>
     </Container>
     )
@@ -116,8 +138,42 @@ const Content = styled.div`
     background-color: white;
     border-radius: 5px;
     box-shadow: 0 1px 3px gray;
-    text-align: center;
-    width:75%;
+     
+    width:300px;
+
+    h1{
+        font-weight:500;
+        margin-bottom:20px;
+    }
+
+    form {
+    display:flex;
+    flex-direction: column;
+    // align-items:center;
+     
+    input{
+        height: 30px;
+        padding: 5px;
+        margin-bottom: 10px;
+        width: 98%;
+    }
+
+    h5{
+        margin-bottom: 5px
+    }
+
+}
+p{
+    font-size: 12px;
+}
+span{
+    margin-top:25px;
+    font-size: 14px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid  lightgrey;
+     
+    justify-content: center;
+}
      
 `
 const AmazonLogo = styled.img`
@@ -129,6 +185,7 @@ const LoginButton = styled.button`
     margin-top: 50px;
     background-color: #f0c14b;
     height: 40px;
+    width: 98%;
     border: 2px solid #a88734;
     border-radius: 4px;
     padding: 4px 8px;
@@ -137,12 +194,19 @@ const LoginButton = styled.button`
 
 const RegisterButton = styled.button` 
  border-radius: 2px;
- width:100%;
  height:30px;
  border: 1px solid;
  margin-top: 10px;
  border-color:darkgray;
+ cursor: pointer;
+ width:98%;
 
 
+
+`
+const ButtonContainer  = styled.div `
+display: flex;
+flex-direction: column;
+align-items: center;
 
 `

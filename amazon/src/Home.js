@@ -58,6 +58,7 @@ function Home() {
                     image = {data.product.image}
                     rating = {data.product.rating}
                     id = {data.id}
+                    key = {data.id}
 
                     />)
                      

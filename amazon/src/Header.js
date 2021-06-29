@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import SearchIcon from "@material-ui/icons/Search";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import {Link} from 'react-router-dom';
+import {auth} from './firebase';
+import { UserContext } from "./contexts/userContext";
 
 const Header = ({cartItems, user, signout}) => {
+  
+  const {email, setEmail}= useContext(UserContext);
+  
+
+
+  const logout =(e)=> {
+    e.preventDefault()
+    if (user){
+      console.log("CLICKIE")
+      setEmail(null)
+      auth.signOut();
+     }
+  }
   return (
     <Container>
       <HeaderLogo>
@@ -36,10 +51,10 @@ const Header = ({cartItems, user, signout}) => {
 
       <HeaderNavItems>
         <HeaderOption>
-          <OptionLineOne>Hello, Guy</OptionLineOne>
-          <Link to = '/login'> 
-          <OptionLineTwo>Account & Lists</OptionLineTwo>
-          </Link>
+          <OptionLineOne  >Hello, {email}</OptionLineOne>
+          <Link to = '/login'>      
+          <OptionLineTwo>{email? (<span onClick = {(e)=>logout}>Sign Out</span> ): (<span>Sign In</span> )}</OptionLineTwo>
+          </Link> 
         </HeaderOption>
 
         <HeaderOption>

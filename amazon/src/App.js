@@ -3,21 +3,35 @@ import Header from "./Header";
 import Cart from "./Cart";
 import Home from "./Home";
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link, useHistory } from "react-router-dom";
 import { db, auth } from "./firebase";
 import Login from "./Login";
 import styled from "styled-components";
 import Register from "./Register";
 import Checkout from './Checkout';
+import { UserContext, PasswordContext  } from "./contexts/userContext";
 // import {useStateValue} from "./StateProvider"
-
-function App() {
+ function App() {
   const [cartItems, setCartItems] = useState([]);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail]= useState('')
+  const [password, setPassword]= useState('')
+  const [ user, setUser]= useState(null)
 
+  useEffect(()=> {
+    auth.onAuthStateChanged((authUser)=> {
+      if (authUser){
+        console.log("AUTH USER", authUser)
+        setUser(authUser)
+      }else{
+        console.log("NO AUTH USER")
+      }
+    })
+
+  }, [user])
+   
+  
+  
+   
   const getCartItems = () => {
     db.collection("cart-items").onSnapshot((snapshot) => {
       let tempItems = [];
@@ -29,25 +43,42 @@ function App() {
     });
   };
  
+   
+   
+
+   
+
+ 
 
   useEffect(() => {
     getCartItems();
   }, []);
-  console.log("CART ITEMS", cartItems);
-
+ 
   return (
     <Container>
-      <Header signOut={signOut} user={user} cartItems={cartItems} />
+      <UserContext.Provider value = {{email,setEmail} }  > 
+      <PasswordContext.Provider value = {{password, setPassword}}> 
+      <Header 
+       user = {user}
+      
+      cartItems={cartItems} />
 
       <Switch>
-        <Route path="/login">
-          <Login setUser= {setUser}/>
+        <Route path= '/register'>
+          <Register/>
         </Route>
-        <Route path="/register">
-          <Register
-           signUp = {signUp}
-             />
+        
+        <Route path="/login"
+          
+        
+        
+        >
+          <Login 
+          user = {user}
+          
+          />
         </Route>
+         
 
         <Route path="/cart">
           <Cart cartItems={cartItems} />
@@ -65,7 +96,11 @@ function App() {
           <Home />
         </Route>
       </Switch>
+      </PasswordContext.Provider>
+      </UserContext.Provider>
+      
     </Container>
+    
   );
 }
 

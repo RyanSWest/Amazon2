@@ -1,5 +1,6 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components';
+import {Link} from 'react-router-dom';
  
 function CartTotal({cartItems}) {
 
@@ -11,10 +12,7 @@ function CartTotal({cartItems}) {
             
         });
         return total.toFixed(2);
-        // return cartItems.reduce((acc, val)=> {
-        //     return acc + val
-        // },0)
-        // .toFixed(2);
+         
     }
 
     const getCount = ()=> {
@@ -36,7 +34,9 @@ function CartTotal({cartItems}) {
           <h3>{getCount()}</h3>
          <h2>${getTotalPrice()}</h2>
          </Subtotal>
+            <Link to = "/checkout"> 
          <CheckoutButton>Checkout</CheckoutButton>
+         </Link>
 
         </Container>
     )
