@@ -105,6 +105,10 @@ const HeaderOptionAdress = styled.div`
 const OptionLineOne = styled.div``;
 const OptionLineTwo = styled.div`
   font-weight: 700;
+  span{
+    color:white;
+
+  }
 `;
 
 const HeaderSearch = styled.div`

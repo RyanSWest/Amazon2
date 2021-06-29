@@ -1,12 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { Input, Button } from "@material-ui/core";
 import { auth } from "./firebase";
+import {UserContext, PasswordContext} from './contexts/userContext';
+import{useHistory} from 'react-router-dom';
 
 function Register({ signUp }) {
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  
+  const { email, setEmail}= useContext(UserContext)
+  const {password, setPassword}= useContext(PasswordContext)
+
+  const history = useHistory()
+
+  const register = (e)=> {
+    e.preventDefault();
+
+    auth.createUserWithEmailAndPassword(email, password)
+    .then(auth=> {
+        history.push('/');
+        let user = localStorage.setItem('user', email)
+
+
+        console.log("REGISTER WORKS!!!")
+
+    })
+    .catch((err)=> {
+        alert(err.message);
+    })
+    
+}
 
   return (
     <Container>
@@ -31,12 +54,12 @@ function Register({ signUp }) {
         />
         <h5>Password</h5>
         <Input
-          placeholder="password"
-          type="Must be at least 6 characters"
+          placeholder="Must be at least 6 characters"
+          type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <LoginButton type="submit">Create Your Amazon Account</LoginButton>
+        <LoginButton type="submit" onClick = {register}>Create Your Amazon Account</LoginButton>
       </form>
       <p>By creating an account, you agree to Amazon's Conditions of Use and Privacy Notice.
 </p>

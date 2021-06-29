@@ -16,12 +16,14 @@ import { UserContext, PasswordContext  } from "./contexts/userContext";
   const [email, setEmail]= useState('')
   const [password, setPassword]= useState('')
   const [ user, setUser]= useState(null)
-
+ 
   useEffect(()=> {
     auth.onAuthStateChanged((authUser)=> {
       if (authUser){
         console.log("AUTH USER", authUser)
         setUser(authUser)
+        console.log("USERNAME", user.displayname)
+
       }else{
         console.log("NO AUTH USER")
       }
@@ -29,7 +31,16 @@ import { UserContext, PasswordContext  } from "./contexts/userContext";
 
   }, [user])
    
-  
+  const getTotalPrice = ()=> {
+    let total = 0;
+    cartItems.forEach(item => {
+        console.log("ITEM PRICE", item.product.price, "QQ", item.product.quantity)
+        total +=(item.product.price * item.product.quantity)
+        
+    });
+    return total.toFixed(2);
+     
+}
   
    
   const getCartItems = () => {
@@ -81,11 +92,16 @@ import { UserContext, PasswordContext  } from "./contexts/userContext";
          
 
         <Route path="/cart">
-          <Cart cartItems={cartItems} />
+          <Cart cartItems={cartItems}
+                getTotalPrice = {getTotalPrice} />
         </Route>
 
         <Route path = '/checkout'>
-          <Checkout cartItems ={cartItems}>
+          <Checkout
+           cartItems ={cartItems}
+           getTotalPrice = {getTotalPrice}
+          
+          >
 
           </Checkout>
 
