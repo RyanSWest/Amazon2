@@ -6,10 +6,12 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import {Link} from 'react-router-dom';
 import {auth} from './firebase';
 import { UserContext } from "./contexts/userContext";
+import {SearchContext} from './contexts/searchContext';
 
 const Header = ({cartItems, user, signout}) => {
   
   const {email, setEmail}= useContext(UserContext);
+  const {search, setSearch}= useContext(SearchContext)
   
 
 
@@ -43,7 +45,23 @@ const Header = ({cartItems, user, signout}) => {
       </HeaderOptionAdress>
 
       <HeaderSearch>
-        <HeaderSearchInput type=" text" />
+        {/* <form 
+         type = 'submit'
+         
+         
+         > */}
+
+         
+        <HeaderSearchInput
+         type=" text"
+         name = "search"
+         value = {search}
+         onChange = {(e)=> setSearch(e.target.value)}
+
+        
+        
+        />
+        {/* </form> */}
         <HeaderSearchIconContainer>
           <SearchIcon />
         </HeaderSearchIconContainer>

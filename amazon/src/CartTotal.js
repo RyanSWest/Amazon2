@@ -7,8 +7,7 @@ function CartTotal({cartItems}) {
     const getTotalPrice = ()=> {
         let total = 0;
         cartItems.forEach(item => {
-            console.log("ITEM PRICE", item.product.price, "QQ", item.product.quantity)
-            total +=(item.product.price * item.product.quantity)
+             total +=(item.product.price * item.product.quantity)
             
         });
         return total.toFixed(2);
@@ -18,8 +17,7 @@ function CartTotal({cartItems}) {
     const getCount = ()=> {
         let count = 0;
         cartItems.forEach((item)=> {
-            console.log("ITEM QUANTITY", item, item.product.quantity)
-            count+= item.product.quantity;
+             count+= item.product.quantity;
 
         })
         return count

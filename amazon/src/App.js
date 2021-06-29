@@ -10,12 +10,25 @@ import styled from "styled-components";
 import Register from "./Register";
 import Checkout from './Checkout';
 import { UserContext, PasswordContext  } from "./contexts/userContext";
+import {SearchContext} from './contexts/searchContext';
 // import {useStateValue} from "./StateProvider"
  function App() {
   const [cartItems, setCartItems] = useState([]);
   const [email, setEmail]= useState('')
   const [password, setPassword]= useState('')
   const [ user, setUser]= useState(null)
+  const[search, setSearch]= useState('')
+
+  const searcher = (e)=> {
+    const filtered = cartItems.filter(item=> {
+      if(item.name.match (search)){
+         return item
+      }
+    })
+    console.log("FILTERED", filtered)
+    return filtered
+  }
+  searcher()
  
   useEffect(()=> {
     auth.onAuthStateChanged((authUser)=> {
@@ -66,6 +79,7 @@ import { UserContext, PasswordContext  } from "./contexts/userContext";
  
   return (
     <Container>
+      <SearchContext.Provider value = {{search, setSearch}}> 
       <UserContext.Provider value = {{email,setEmail} }  > 
       <PasswordContext.Provider value = {{password, setPassword}}> 
       <Header 
@@ -113,6 +127,7 @@ import { UserContext, PasswordContext  } from "./contexts/userContext";
       </Switch>
       </PasswordContext.Provider>
       </UserContext.Provider>
+      </SearchContext.Provider>
       
     </Container>
     

@@ -1,17 +1,20 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styled from 'styled-components';
 // import { Container } from 'winston';
 import CartItem from './CartItem';
+import {SearchContext} from './contexts/searchContext';
 
 function CartItems({cartItems}) {
+    const {search,setSearch} =  useContext(SearchContext)
     return (
        <Container>
            <Title>Shopping Cart</Title>
+           <h1>{search}</h1>
            <hr/>
-
+            
            <ItemsContainer>
 
-               {cartItems.map(item=> {
+               {cartItems?.map(item=> {
                    return (
                     <CartItem
                     id = {item.id}

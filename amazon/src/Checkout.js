@@ -54,7 +54,7 @@ function Checkout({cartItems, getTotalPrice}) {
 
 
               <img src = 'https://images-na.ssl-images-amazon.com/images/G/01/checkout/payselect/card-logos-small/plcc._CB485946599_.gif'/>
-              <span>ending in 8888</span>
+             
               </CreditCard>
               <h4>Billing address</h4>
               <span>Same as shipping address</span>

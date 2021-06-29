@@ -1,13 +1,26 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect,   useContext } from 'react'
 import styled from 'styled-components';
 import Product  from './Product';
 import firebaseApp from './firebase';
 import{db} from './firebase';
 import Login from './Login';
+import {SearchContext} from './contexts/searchContext';
+
 
 function Home() {
     
     const [products, setProducts]= useState([])
+    const {search, setSearch}= useContext(SearchContext)
+    const searcher = (e)=> {
+        const filtered = products.filter(item=> {
+          if(item.product.name.match (search)){
+             return item
+          }
+        })
+        console.log("FILTERED", filtered)
+        return filtered
+      }
+      searcher()
 
     const getProducts = ()=> {
         db.collection('products').onSnapshot((snapshot)=> {
@@ -40,6 +53,7 @@ function Home() {
          
     return (
          <Container>
+             <h1>{search}</h1>
           
              <Banner>
                
