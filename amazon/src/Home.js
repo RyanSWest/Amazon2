@@ -5,23 +5,28 @@ import firebaseApp from './firebase';
 import{db} from './firebase';
 import Login from './Login';
 import {SearchContext} from './contexts/searchContext';
+import {ProductContext} from './contexts/ProductContext';
 
 
 function Home() {
     
-    const [products, setProducts]= useState([])
+    const {products, setProducts}= useContext(ProductContext)
     const {search, setSearch}= useContext(SearchContext)
+
+
+
     const searcher = (e)=> {
+        e.preventDefault();
         const filtered = products.filter(item=> {
-          if(item.product.name.match (search)){
+          if(item.product.name.toLowerCase().match (search)){
              return item
           }
         })
         console.log("FILTERED", filtered)
-        return filtered
+        setProducts(filtered)
       }
-      searcher()
 
+ 
     const getProducts = ()=> {
         db.collection('products').onSnapshot((snapshot)=> {
             let tempProducts = [];
@@ -49,7 +54,7 @@ function Home() {
 
         
 
-    }, [])
+    }, [search])
          
     return (
          <Container>

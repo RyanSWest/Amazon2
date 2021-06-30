@@ -7,12 +7,26 @@ import {Link} from 'react-router-dom';
 import {auth} from './firebase';
 import { UserContext } from "./contexts/userContext";
 import {SearchContext} from './contexts/searchContext';
+import {ProductContext} from './contexts/ProductContext';
 
 const Header = ({cartItems, user, signout}) => {
   
   const {email, setEmail}= useContext(UserContext);
   const {search, setSearch}= useContext(SearchContext)
+  const {products, setProducts}=  useContext(ProductContext)
   
+
+  const searcher = (e)=> {
+    // e.preventDefault();
+    const filtered = products.filter(item=> {
+      if(item.product.name.match (search)){
+         return item
+      }
+    })
+    console.log("SEARCHIE MEARCHIE")
+    console.log("FILTERED", filtered)
+    setProducts(filtered)
+  }
 
 
   const logout =(e)=> {
@@ -63,7 +77,7 @@ const Header = ({cartItems, user, signout}) => {
         />
         {/* </form> */}
         <HeaderSearchIconContainer>
-          <SearchIcon />
+          <SearchIcon onClick = {(e)=> searcher()}/>
         </HeaderSearchIconContainer>
       </HeaderSearch>
 

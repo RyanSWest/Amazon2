@@ -51,10 +51,7 @@ function Login( ) {
     
 }
 
-const goToReg = (e)=> {
-    e.preventDefault();
-    history.push('/register')
-}
+
    
 
      

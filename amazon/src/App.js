@@ -11,6 +11,7 @@ import Register from "./Register";
 import Checkout from './Checkout';
 import { UserContext, PasswordContext  } from "./contexts/userContext";
 import {SearchContext} from './contexts/searchContext';
+import {ProductContext} from './contexts/ProductContext';
 // import {useStateValue} from "./StateProvider"
  function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -18,17 +19,9 @@ import {SearchContext} from './contexts/searchContext';
   const [password, setPassword]= useState('')
   const [ user, setUser]= useState(null)
   const[search, setSearch]= useState('')
+  const [products, setProducts]= useState([])
 
-  const searcher = (e)=> {
-    const filtered = cartItems.filter(item=> {
-      if(item.name.match (search)){
-         return item
-      }
-    })
-    console.log("FILTERED", filtered)
-    return filtered
-  }
-  searcher()
+   
  
   useEffect(()=> {
     auth.onAuthStateChanged((authUser)=> {
@@ -79,6 +72,7 @@ import {SearchContext} from './contexts/searchContext';
  
   return (
     <Container>
+      <ProductContext.Provider value = {{products, setProducts}}> 
       <SearchContext.Provider value = {{search, setSearch}}> 
       <UserContext.Provider value = {{email,setEmail} }  > 
       <PasswordContext.Provider value = {{password, setPassword}}> 
@@ -128,6 +122,7 @@ import {SearchContext} from './contexts/searchContext';
       </PasswordContext.Provider>
       </UserContext.Provider>
       </SearchContext.Provider>
+      </ProductContext.Provider>
       
     </Container>
     
