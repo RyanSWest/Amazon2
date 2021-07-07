@@ -2,11 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import CartItem from './CartItem';
 import CartTotal from './CartTotal';
+import {Link } from 'react-router-dom'
 
 function Checkout({cartItems, getTotalPrice}) {
     console.log("CHECKOUT ITEMS", cartItems)
     const tax = getTotalPrice()* .15;
     const grandTotal = parseInt (tax) + parseInt (getTotalPrice())
+
+    console.log("CHECKOUT CART", cartItems)
 
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -78,7 +81,9 @@ function Checkout({cartItems, getTotalPrice}) {
 
             </TopLeft>
             <TopRight>
+                <Link to = '/payment'> 
                 <PlaceOrder>Place Your Order</PlaceOrder>
+                </Link>
                 <span>By placing your order, you agree to Amazon's</span>
                 <span> privacy notice and conditions of use.</span>
                 <h4>Order Summary</h4>
@@ -92,7 +97,7 @@ function Checkout({cartItems, getTotalPrice}) {
                 </div>
                 <div>
 
-                <h3 className = 'h3-left'>Order total:</h3> < h3 className = 'h3-right'>${grandTotal}</h3>
+                <h3 className = 'h3-left'>Order total:</h3> < h3 className = 'h3-right'>${grandTotal.toFixed(2)}</h3>
                 </div>
                  
                

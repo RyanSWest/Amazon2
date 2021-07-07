@@ -12,6 +12,13 @@ import Checkout from './Checkout';
 import { UserContext, PasswordContext  } from "./contexts/userContext";
 import {SearchContext} from './contexts/searchContext';
 import {ProductContext} from './contexts/ProductContext';
+import Payment from './payment';
+import {loadStripe} from '@stripe/stripe-js';
+import {Elements} from '@stripe/react-stripe-js'
+
+const promise = loadStripe('pk_test_51J8tvhBaRV6ucR0OrArDHIRwgEmvaEbpoAwNI8lAgkgkDBaIobUPUQG2OlNLgvxa2nhy5GkowyB9Al2Oi5fq2NH600f28HxBnx');
+
+console.log("PROMISE", promise)
 // import {useStateValue} from "./StateProvider"
  function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -114,6 +121,24 @@ import {ProductContext} from './contexts/ProductContext';
 
 
         </Route>
+        <Route path = "/payment"
+        
+
+        >
+
+          <Elements stripe = {promise}>
+          <Payment
+          
+          user = {user}
+          cartItems = {cartItems}
+          getTotalPrice = {getTotalPrice}
+          
+          />
+
+          </Elements>
+
+          
+          </Route>
 
         <Route path="/">
           <Home />

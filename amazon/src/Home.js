@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Product  from './Product';
 import firebaseApp from './firebase';
 import{db} from './firebase';
-import Login from './Login';
+ import Login from './Login';
 import {SearchContext} from './contexts/searchContext';
 import {ProductContext} from './contexts/ProductContext';
 
@@ -114,6 +114,7 @@ padding-right: 10px;
 margin-top: -350px;
 z-index: 100px;
 display: flex;
+flex-flow: row wrap;
 
   
 

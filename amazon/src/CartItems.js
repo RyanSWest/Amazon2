@@ -9,7 +9,7 @@ function CartItems({cartItems}) {
     return (
        <Container>
            <Title>Shopping Cart</Title>
-           <h1>{search}</h1>
+           
            <hr/>
             
            <ItemsContainer>
