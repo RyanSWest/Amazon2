@@ -58,7 +58,7 @@ function Home() {
          
     return (
          <Container>
-             <h1>{search}</h1>
+          
           
              <Banner>
                

@@ -29,7 +29,7 @@ function CartTotal({cartItems}) {
     return (
         <Container>
          <Subtotal>Subtotal ({getCount()} items):
-          <h3>{getCount()}</h3>
+        
          <h2>${getTotalPrice()}</h2>
          </Subtotal>
             <Link to = "/checkout"> 

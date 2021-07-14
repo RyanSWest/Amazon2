@@ -17,9 +17,10 @@ const Header = ({cartItems, user, signout}) => {
   
 
   const searcher = (e)=> {
-    // e.preventDefault();
+    e.preventDefault();
     const filtered = products.filter(item=> {
-      if(item.product.name.match (search)){
+
+      if(item.product.name.toLowerCase().match (search)){
          return item
       }
     })
@@ -57,13 +58,14 @@ const Header = ({cartItems, user, signout}) => {
           <OptionLineTwo>Select Your Address</OptionLineTwo>
         </HeaderOption>
       </HeaderOptionAdress>
-
-      <HeaderSearch>
-        {/* <form 
+      <Formie
          type = 'submit'
+         onSubmit= {searcher}
          
          
-         > */}
+         >
+      <HeaderSearch>
+         
 
          
         <HeaderSearchInput
@@ -71,15 +73,17 @@ const Header = ({cartItems, user, signout}) => {
          name = "search"
          value = {search}
          onChange = {(e)=> setSearch(e.target.value)}
+         onSubmit ={searcher}
 
         
         
         />
-        {/* </form> */}
+        
         <HeaderSearchIconContainer>
           <SearchIcon onClick = {(e)=> searcher()}/>
         </HeaderSearchIconContainer>
       </HeaderSearch>
+      </Formie>
 
       <HeaderNavItems>
         <HeaderOption>
@@ -110,6 +114,20 @@ const Header = ({cartItems, user, signout}) => {
 };
 
 export default Header;
+
+const Formie = styled.form `
+display: flex;
+  flex-grow: 1;
+  height: 40px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-left: 4px;
+  background-color: white;
+  :focus-within{
+    box-shadow: 0 0 0 3px #F90;
+
+
+`
 
 const Container = styled.div`
   height: 60px;
