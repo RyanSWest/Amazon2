@@ -1,13 +1,32 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect,   useContext } from 'react'
 import styled from 'styled-components';
 import Product  from './Product';
 import firebaseApp from './firebase';
 import{db} from './firebase';
+ import Login from './Login';
+import {SearchContext} from './contexts/searchContext';
+import {ProductContext} from './contexts/ProductContext';
+
 
 function Home() {
     
-    const [products, setProducts]= useState([])
+    const {products, setProducts}= useContext(ProductContext)
+    const {search, setSearch}= useContext(SearchContext)
 
+
+
+    const searcher = (e)=> {
+        e.preventDefault();
+        const filtered = products.filter(item=> {
+          if(item.product.name.toLowerCase().match (search)){
+             return item
+          }
+        })
+        console.log("FILTERED", filtered)
+        setProducts(filtered)
+      }
+
+ 
     const getProducts = ()=> {
         db.collection('products').onSnapshot((snapshot)=> {
             let tempProducts = [];
@@ -35,15 +54,17 @@ function Home() {
 
         
 
-    }, [])
+    }, [search])
          
     return (
          <Container>
+          
           
              <Banner>
                
 
              </Banner>
+           
              <Content>
                  {products.map((data)=> {
 
@@ -56,6 +77,7 @@ function Home() {
                     image = {data.product.image}
                     rating = {data.product.rating}
                     id = {data.id}
+                    key = {data.id}
 
                     />)
                      
@@ -92,6 +114,7 @@ padding-right: 10px;
 margin-top: -350px;
 z-index: 100px;
 display: flex;
+flex-flow: row wrap;
 
   
 

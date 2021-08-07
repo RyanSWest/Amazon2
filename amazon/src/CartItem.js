@@ -4,7 +4,7 @@ import {db} from './firebase';
  
 function CartItem({id, item}) {
 
-    console.log("CART _ID", id)
+     
 
     const deleteItem = (e)=> {
         e.preventDefault()
@@ -27,7 +27,7 @@ function CartItem({id, item}) {
     }
     return (
         <Container>
-            Cart Item
+           
             {item.id}
             <ImageContainer>
                 <img src = {item.image}/>
@@ -44,7 +44,7 @@ function CartItem({id, item}) {
                 value = {item.quantity}
                 onChange= {(e)=> changeQuantity(e.target.value)}
                 >
-                  {/* <option  >Qty:  </option>   */}
+                 
                   {options}
 
                 </select>

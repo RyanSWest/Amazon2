@@ -70,6 +70,7 @@ export default Product
 
 const Container = styled.div`
 background-color: white;
+width: 200px;
 z-index:100;
 flex: 1;
 margin: 10px;
@@ -77,6 +78,8 @@ padding: 20px;
 max-height: 400px;
 display: flex;
 flex-direction:column;
+justify-content: space-between;
+
  
 
 
@@ -96,7 +99,11 @@ padding: 10px;
 `
 const Image = styled.img`
 max-height:200px;
-object-fit:contain;`
+object-fit:contain;
+width: 200px;
+height: 200px;
+
+`
 const AddToCartButton = styled.button`
 width:100px;
 height: 30px;

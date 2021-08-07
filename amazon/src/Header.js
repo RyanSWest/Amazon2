@@ -1,11 +1,43 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import SearchIcon from "@material-ui/icons/Search";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import {Link} from 'react-router-dom';
+import {auth} from './firebase';
+import { UserContext } from "./contexts/userContext";
+import {SearchContext} from './contexts/searchContext';
+import {ProductContext} from './contexts/ProductContext';
 
-const Header = () => {
+const Header = ({cartItems, user, signout}) => {
+  
+  const {email, setEmail}= useContext(UserContext);
+  const {search, setSearch}= useContext(SearchContext)
+  const {products, setProducts}=  useContext(ProductContext)
+  
+
+  const searcher = (e)=> {
+    e.preventDefault();
+    const filtered = products.filter(item=> {
+
+      if(item.product.name.toLowerCase().match (search)){
+         return item
+      }
+    })
+    console.log("SEARCHIE MEARCHIE")
+    console.log("FILTERED", filtered)
+    setProducts(filtered)
+  }
+
+
+  const logout =(e)=> {
+    e.preventDefault()
+    if (user){
+      console.log("CLICKIE")
+      setEmail(null)
+      auth.signOut();
+     }
+  }
   return (
     <Container>
       <HeaderLogo>
@@ -26,18 +58,39 @@ const Header = () => {
           <OptionLineTwo>Select Your Address</OptionLineTwo>
         </HeaderOption>
       </HeaderOptionAdress>
-
+      <Formie
+         type = 'submit'
+         onSubmit= {searcher}
+         
+         
+         >
       <HeaderSearch>
-        <HeaderSearchInput type=" text" />
+         
+
+         
+        <HeaderSearchInput
+         type=" text"
+         name = "search"
+         value = {search}
+         onChange = {(e)=> setSearch(e.target.value)}
+         onSubmit ={searcher}
+
+        
+        
+        />
+        
         <HeaderSearchIconContainer>
-          <SearchIcon />
+          <SearchIcon onClick = {(e)=> searcher()}/>
         </HeaderSearchIconContainer>
       </HeaderSearch>
+      </Formie>
 
       <HeaderNavItems>
         <HeaderOption>
-          <OptionLineOne>Hello, Guy</OptionLineOne>
-          <OptionLineTwo>Account & Lists</OptionLineTwo>
+          <OptionLineOne  >Hello, {email}</OptionLineOne>
+          <Link to = '/login'>      
+          <OptionLineTwo>{email? (<span onClick = {(e)=>logout}>Sign Out</span> ): (<span>Sign In</span> )}</OptionLineTwo>
+          </Link> 
         </HeaderOption>
 
         <HeaderOption>
@@ -51,7 +104,7 @@ const Header = () => {
         <Link to ="/cart"> 
           <ShoppingBasketIcon />
 
-          <CartCount>5</CartCount>
+          <CartCount>{cartItems.length}</CartCount>
           </Link>
         </HeaderOptionCart>
          
@@ -61,6 +114,20 @@ const Header = () => {
 };
 
 export default Header;
+
+const Formie = styled.form `
+display: flex;
+  flex-grow: 1;
+  height: 40px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-left: 4px;
+  background-color: white;
+  :focus-within{
+    box-shadow: 0 0 0 3px #F90;
+
+
+`
 
 const Container = styled.div`
   height: 60px;
@@ -88,6 +155,10 @@ const HeaderOptionAdress = styled.div`
 const OptionLineOne = styled.div``;
 const OptionLineTwo = styled.div`
   font-weight: 700;
+  span{
+    color:white;
+
+  }
 `;
 
 const HeaderSearch = styled.div`

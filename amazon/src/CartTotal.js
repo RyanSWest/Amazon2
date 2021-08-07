@@ -1,23 +1,23 @@
 import React from 'react'
-import styled from 'styled-components'
-
+import styled from 'styled-components';
+import {Link} from 'react-router-dom';
+ 
 function CartTotal({cartItems}) {
 
     const getTotalPrice = ()=> {
         let total = 0;
         cartItems.forEach(item => {
-            console.log("ITEM PRICE", item.product.price, "QQ", item.product.quantity)
-            total +=(item.product.price * item.product.quantity)
+             total +=(item.product.price * item.product.quantity)
             
         });
-        return total;
+        return total.toFixed(2);
+         
     }
 
     const getCount = ()=> {
         let count = 0;
         cartItems.forEach((item)=> {
-            console.log("ITEM QUANTITY", item, item.product.quantity)
-            count+= item.product.quantity;
+             count+= item.product.quantity;
 
         })
         return count
@@ -29,11 +29,12 @@ function CartTotal({cartItems}) {
     return (
         <Container>
          <Subtotal>Subtotal ({getCount()} items):
-         <NumberFormat value = {getTotalPrice()} displayType={'text'} thousandSeperator={true}prefix={'$'}/>
-         <h3>{getCount()}</h3>
+        
          <h2>${getTotalPrice()}</h2>
          </Subtotal>
+            <Link to = "/checkout"> 
          <CheckoutButton>Checkout</CheckoutButton>
+         </Link>
 
         </Container>
     )
